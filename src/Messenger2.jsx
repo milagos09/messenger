@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 
-const FacebookMessengerChat = (props) => {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.innerHTML = `
+const FacebookMessengerChat = ({ pageId }) => {
+    useEffect(() => {
+        const script = document.createElement("script");
+        script.innerHTML = `
       var chatbox = document.getElementById('fb-customer-chat');
-      chatbox.setAttribute("page_id", "${props.pageId}");
+      chatbox.setAttribute("page_id", "${pageId}");
       chatbox.setAttribute("attribution", "biz_inbox");
 
       window.fbAsyncInit = function() {
@@ -23,27 +23,30 @@ const FacebookMessengerChat = (props) => {
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     `;
-    document.body.appendChild(script);
-  }, []);
+        document.body.appendChild(script);
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, [pageId]);
 
-  return (
-    <>
-      <div id="fb-root"></div>
-      <div
-        id="fb-customer-chat"
-        className="fb-customerchat"
-        dangerouslySetInnerHTML={{
-          __html: `
+    return (
+        <>
+            <div id="fb-root"></div>
+            <div
+                id="fb-customer-chat"
+                className="fb-customerchat"
+                dangerouslySetInnerHTML={{
+                    __html: `
             <div id="fb-root"></div>
             <div class="fb-customerchat"
               attribution="biz_inbox"
               page_id=${props.pageId}
             ></div>
           `,
-        }}
-      ></div>
-    </>
-  );
+                }}
+            ></div>
+        </>
+    );
 };
 
 export default FacebookMessengerChat;
