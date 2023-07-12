@@ -40,7 +40,7 @@ const FacebookMessengerChat = ({ pageId }) => {
             <div id="fb-root"></div>
             <div class="fb-customerchat"
               attribution="biz_inbox"
-              page_id=${props.pageId}
+              page_id=${pageId}
             ></div>
           `,
                 }}
